@@ -29,7 +29,7 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(chat)
     # 添加配置
-    app.config.from_object('web_chatroom.settings.DebugConfig')
+    app.config.from_object('web_chatroom.settings.Config')
     # 读取配置
     db.init_app(app)
     login_manager.init_app(app)
