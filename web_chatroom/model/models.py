@@ -19,17 +19,17 @@ class User(UserMixin, db.Model):
             self.avatar_url = 'https://gravatar.com/avatar/' + hashlib.md5(
                 self.email.encode('utf-8')).hexdigest() + '?d=identicon'
 
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
+    # def is_authenticated(self):
+    #     return True
+    #
+    # def is_active(self):
+    #     return True
+    #
+    # def is_anonymous(self):
+    #     return False
+    #
+    # def get_id(self):
+    #     return self.id
 
 
 class Message(db.Model):

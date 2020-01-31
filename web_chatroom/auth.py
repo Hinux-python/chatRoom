@@ -10,13 +10,19 @@ from utils import forms
 auth = Blueprint('auth', __name__)
 
 
+@auth.route('/', methods=['GET', "POST"], endpoint='index')
+def index():
+    if request.method == 'GET':
+        return render_template('login.html')
+
+
 @auth.route('/login', methods=['GET', "POST"], endpoint='login')
 def login():
     if request.method == 'GET':
         if current_user.is_authenticated:
             return redirect(url_for('chat.chat'))
         else:
-            return redirect(url_for('auth.login'))
+            return render_template('login.html')
     elif request.method == 'POST':
         form = forms.LoginForm(formdata=request.form)
         if form.validate():
@@ -42,7 +48,7 @@ def register():
         if current_user.is_authenticated:
             return redirect(url_for('chat.chat'))
         else:
-            return redirect(url_for('auth.register'))
+            return render_template('register.html')
     elif request.method == 'POST':
         form = forms.RegisterForm(formdata=request.form)
         if form.validate():

@@ -17,9 +17,7 @@ login_manager.blueprint_login_views='auth.login'
 # 用于从缓存中得到存在用户登录
 @login_manager.user_loader
 def load_user(user_id):
-    print(user_id)
     return db.session.query(User).filter(User.id == user_id).first()
-
 
 # @login_manager.user_loader
 # def login_user(user_id):
