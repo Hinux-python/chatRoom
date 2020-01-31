@@ -10,13 +10,24 @@ from web_chatroom.model.models import *
 from web_chatroom.auth import auth
 from web_chatroom.chat import chat
 
-
+login_manager.blueprint_login_views='auth.login'
 # from web_chatroom.chat import chat
 
 
+# 用于从缓存中得到存在用户登录
 @login_manager.user_loader
 def load_user(user_id):
+    print(user_id)
     return db.session.query(User).filter(User.id == user_id).first()
+
+
+# @login_manager.user_loader
+# def login_user(user_id):
+#     print(db.session.query(User).filter(User.id == user_id).first())
+#     if db.session.query(User).filter(User.id == user_id).first():
+#         return redirect(url_for('chat.chat'))
+#     else:
+#         return redirect(url_for('auth.login'))
 
 
 @login_manager.unauthorized_handler

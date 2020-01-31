@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for
 from flask import request
 from web_chatroom.model import models
 from web_chatroom import db
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 import hashlib
 from utils import forms
 
@@ -13,7 +13,10 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', "POST"], endpoint='login')
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        if current_user.is_authenticated:
+            return redirect(url_for('chat.chat'))
+        else:
+            return redirect(url_for('auth.login'))
     elif request.method == 'POST':
         form = forms.LoginForm(formdata=request.form)
         if form.validate():
@@ -36,7 +39,10 @@ def login():
 @auth.route('/register', methods=['GET', "POST"], endpoint='register')
 def register():
     if request.method == 'GET':
-        return render_template('register.html')
+        if current_user.is_authenticated:
+            return redirect(url_for('chat.chat'))
+        else:
+            return redirect(url_for('auth.register'))
     elif request.method == 'POST':
         form = forms.RegisterForm(formdata=request.form)
         if form.validate():
